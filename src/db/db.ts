@@ -1,6 +1,5 @@
+import { formatKeys } from './utils/format_keys'
 const AWS = require('aws-sdk')
-const formatCreateItem = require('./utils/formatKeys')
-
 const region = process.env.AWS_REGION || 'us-east-1'
 const db = new AWS.DynamoDB.DocumentClient({
     region: region
@@ -127,7 +126,7 @@ export async function createDbItem(input: any, table = process.env.TABLE) {
     }
 
     const createItem = async () => {
-        const formattedInput = formatCreateItem(input)
+        const formattedInput = formatKeys(input)
 
         await db
             .put({
@@ -166,7 +165,7 @@ export async function setDbItem(input: any, table = process.env.TABLE) {
         throw new Error('create must have a sk defined')
     }
 
-    const formattedInput = formatCreateItem(input)
+    const formattedInput = formatKeys(input)
     await db
         .put({
             TableName: table,
