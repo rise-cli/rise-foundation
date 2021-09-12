@@ -28,9 +28,9 @@ jobs:
                   aws-region: us-east-1
             - name: Deploy to AWS CloudFormation
               uses: aws-actions/aws-cloudformation-github-deploy@v1
-              if: ${{ success() || failure() }}
               with:
                   name: RiseFoundationTestStack
+                  no-fail-on-empty-changeset: '1'
                   template: ./infrastructure/integrationTestStack.yaml
 
             - name: Use Node.js ${{ matrix.node-version }}
