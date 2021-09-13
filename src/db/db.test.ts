@@ -1,6 +1,6 @@
 import { getDbItem, listDbItems, setDbItem, removeDbItem } from './db'
 import { testUtils } from './_tests/testUtils'
-process.env.TABLE = 'RiseFoundationIntegrationTestTable'
+process.env.TABLE = 'RiseFoundationIntegrationTestTableUnit'
 
 test('db works', async () => {
     try {

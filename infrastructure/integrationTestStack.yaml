@@ -4,34 +4,34 @@ Resources:
         Properties:
             TableName: RiseFoundationIntegrationTestTable
             AttributeDefinitions:
-                - AttributeName: PK
+                - AttributeName: pk
                   AttributeType: S
-                - AttributeName: SK
+                - AttributeName: sk
                   AttributeType: S
-                - AttributeName: GSI1
+                - AttributeName: pk2
                   AttributeType: S
-                - AttributeName: GSI2
+                - AttributeName: pk3
                   AttributeType: S
             KeySchema:
-                - AttributeName: PK
+                - AttributeName: pk
                   KeyType: HASH
-                - AttributeName: SK
+                - AttributeName: sk
                   KeyType: RANGE
             BillingMode: PAY_PER_REQUEST
             GlobalSecondaryIndexes:
-                - IndexName: GSI1
+                - IndexName: pk2
                   KeySchema:
-                      - AttributeName: GSI1
+                      - AttributeName: pk2
                         KeyType: HASH
-                      - AttributeName: SK
+                      - AttributeName: sk
                         KeyType: RANGE
                   Projection:
                       ProjectionType: ALL
-                - IndexName: GSI2
+                - IndexName: pk3
                   KeySchema:
-                      - AttributeName: GSI2
+                      - AttributeName: pk3
                         KeyType: HASH
-                      - AttributeName: PK
+                      - AttributeName: pk
                         KeyType: RANGE
                   Projection:
                       ProjectionType: ALL

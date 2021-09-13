@@ -10,42 +10,42 @@ export const testUtils = {
             .createTable({
                 AttributeDefinitions: [
                     {
-                        AttributeName: 'PK',
+                        AttributeName: 'pk',
                         AttributeType: 'S'
                     },
                     {
-                        AttributeName: 'SK',
+                        AttributeName: 'sk',
                         AttributeType: 'S'
                     },
                     {
-                        AttributeName: 'GSI1',
+                        AttributeName: 'pk2',
                         AttributeType: 'S'
                     },
                     {
-                        AttributeName: 'GSI2',
+                        AttributeName: 'pk3',
                         AttributeType: 'S'
                     }
                 ],
                 KeySchema: [
                     {
-                        AttributeName: 'PK',
+                        AttributeName: 'pk',
                         KeyType: 'HASH'
                     },
                     {
-                        AttributeName: 'SK',
+                        AttributeName: 'sk',
                         KeyType: 'RANGE'
                     }
                 ],
                 GlobalSecondaryIndexes: [
                     {
-                        IndexName: 'GSI1',
+                        IndexName: 'pk2',
                         KeySchema: [
                             {
-                                AttributeName: 'GSI1',
+                                AttributeName: 'pk2',
                                 KeyType: 'HASH'
                             },
                             {
-                                AttributeName: 'SK',
+                                AttributeName: 'sk',
                                 KeyType: 'RANGE'
                             }
                         ],
@@ -54,14 +54,14 @@ export const testUtils = {
                         }
                     },
                     {
-                        IndexName: 'GSI2',
+                        IndexName: 'pk3',
                         KeySchema: [
                             {
-                                AttributeName: 'GSI2',
+                                AttributeName: 'pk3',
                                 KeyType: 'HASH'
                             },
                             {
-                                AttributeName: 'SK',
+                                AttributeName: 'sk',
                                 KeyType: 'RANGE'
                             }
                         ],
