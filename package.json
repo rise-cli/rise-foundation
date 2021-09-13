@@ -8,7 +8,8 @@
         "test": "echo \"Error: no test specified\" && exit 1",
         "build": "tsc",
         "publish": "npm run build && npm publish",
-        "ci:test:db": "node_modules/.bin/jest db.test"
+        "ci:test:db": "node_modules/.bin/jest db.test",
+        "ci:test:s3": "node_modules/.bin/jest s3.test"
     },
     "keywords": [],
     "author": "",
