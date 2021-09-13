@@ -29,6 +29,7 @@ export async function getDbItem(input: any, table = process.env.TABLE) {
         const item = await db
             .get({
                 TableName: table,
+                IndexName: 'pk2',
                 Key: {
                     pk2: input.pk2,
                     sk: input.sk
@@ -42,6 +43,7 @@ export async function getDbItem(input: any, table = process.env.TABLE) {
         const item = await db
             .get({
                 TableName: table,
+                IndexName: 'pk3',
                 Key: {
                     pk3: input.pk3,
                     sk: input.sk

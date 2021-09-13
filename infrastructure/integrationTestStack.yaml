@@ -31,7 +31,7 @@ Resources:
                   KeySchema:
                       - AttributeName: pk3
                         KeyType: HASH
-                      - AttributeName: pk
+                      - AttributeName: sk
                         KeyType: RANGE
                   Projection:
                       ProjectionType: ALL
