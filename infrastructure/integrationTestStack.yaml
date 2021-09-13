@@ -35,3 +35,8 @@ Resources:
                         KeyType: RANGE
                   Projection:
                       ProjectionType: ALL
+    IntegrationTestS3Bucket:
+        Type: 'AWS::S3::Bucket'
+        DeletionPolicy: Delete
+        Properties:
+            BucketName: rise-foundation-integration-test-bucket
