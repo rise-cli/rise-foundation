@@ -1,13 +1,13 @@
 import { getDbItem, listDbItems, setDbItem, removeDbItem } from './db'
 import { testUtils } from './_tests/testUtils'
-process.env.TABLE = 'RiseFoundationIntegrationTestTableUnit'
+process.env.TABLE = 'RiseFoundationIntegrationTestTable'
 
 test('db works', async () => {
-    try {
-        await testUtils.createTable()
-    } catch (e) {
-        console.log('Table already exists')
-    }
+    // try {
+    //     await testUtils.createTable()
+    // } catch (e) {
+    //     console.log('Table already exists')
+    // }
 
     /**
      * Testing Set
