@@ -86,19 +86,6 @@ test('cognito user management works', async () => {
     expect(typeof tokens.idToken).toBe('string')
 
     /**
-     * Refresh Token
-     *
-     */
-
-    const refreshed = await refreshTokens({
-        refreshToken: tokens.refreshToken,
-        userPoolId: poolId,
-        clientId: clientId
-    })
-
-    console.log('>>>> ', refreshed)
-
-    /**
      * Validate Token
      *
      */
