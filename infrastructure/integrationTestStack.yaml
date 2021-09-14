@@ -40,3 +40,39 @@ Resources:
         DeletionPolicy: Delete
         Properties:
             BucketName: rise-foundation-integration-test-bucket
+    CognitoUserPoolMyUserPool:
+        Type: AWS::Cognito::UserPool
+        Properties:
+            UserPoolName: RiseFoundationIntegrationTest-pool
+            UsernameAttributes:
+                - email
+            AutoVerifiedAttributes:
+                - email
+
+            AdminCreateUserConfig:
+                AllowAdminCreateUserOnly: true
+                InviteMessageTemplate:
+                    EmailSubject: You are being invited to join Grandvalley Strawberries
+                UnusedAccountValidityDays: 365
+
+    CognitoUserPoolClient:
+        Type: AWS::Cognito::UserPoolClient
+        Properties:
+            ClientName: RiseFoundationIntegrationTest-pool-client
+            UserPoolId:
+                Ref: CognitoUserPoolMyUserPool
+            ExplicitAuthFlows:
+                - ADMIN_NO_SRP_AUTH
+            GenerateSecret: false
+Outputs:
+    CognitoUserPoolId:
+        Description: Cognito User Pood Id
+        Value: !Ref CognitoUserPoolMyUserPool
+        Export:
+            Name: RiseFoundationIntegrationTest-pool
+
+    CognitoUserPoolClientId:
+        Description: Cognito User Pool Client Id
+        Value: !Ref CognitoUserPoolClient
+        Export:
+            Name: RiseFoundationIntegrationTest-pool-client
