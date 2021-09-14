@@ -44,10 +44,6 @@ Resources:
         Type: AWS::Cognito::UserPool
         Properties:
             UserPoolName: RiseFoundationIntegrationTest-pool
-            UsernameAttributes:
-                - email
-            AutoVerifiedAttributes:
-                - email
 
             AdminCreateUserConfig:
                 AllowAdminCreateUserOnly: true
