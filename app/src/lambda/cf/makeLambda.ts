@@ -3,8 +3,12 @@ export type MakeLambdaInput = {
     name: string
     stage: String
     bucketArn: string
-    dbName: string
+    bucketKey: string
     permissions: any[]
+    env?: any
+    handler?: string
+    timeout?: number
+    layers?: string[]
 }
 
 /* 
@@ -25,6 +29,35 @@ export type MakeLambdaInput = {
 
 export function makeLambda(props: MakeLambdaInput) {
     const b = props.bucketArn.split(':::')[1]
+
+    const basePermissions = [
+        {
+            Action: ['logs:CreateLogStream'],
+            Resource: [
+                {
+                    'Fn::Sub': [
+                        `arn:aws:logs:\${AWS::Region}:\${AWS::AccountId}:log-group:/aws/lambda/${props.appName}-${props.name}-${props.stage}:*`,
+                        {}
+                    ]
+                }
+            ],
+            Effect: 'Allow'
+        },
+        {
+            Action: ['logs:PutLogEvents'],
+            Resource: [
+                {
+                    'Fn::Sub': [
+                        `arn:aws:logs:\${AWS::Region}:\${AWS::AccountId}:log-group:/aws/lambda/${props.appName}-${props.name}-${props.stage}:*:*`,
+                        {}
+                    ]
+                }
+            ],
+            Effect: 'Allow'
+        }
+    ]
+
+    const permissions = [...basePermissions, ...props.permissions]
     return {
         Resources: {
             /**
@@ -47,10 +80,10 @@ export function makeLambda(props: MakeLambdaInput) {
                 Properties: {
                     Code: {
                         S3Bucket: b,
-                        S3Key: `functions/${props.name}/lambda.zip`
+                        S3Key: props.bucketKey
                     },
                     FunctionName: `${props.appName}-${props.name}-${props.stage}`,
-                    Handler: 'index.handler',
+                    Handler: props.handler || 'index.handler',
                     MemorySize: 1024,
                     Role: {
                         'Fn::GetAtt': [
@@ -59,12 +92,11 @@ export function makeLambda(props: MakeLambdaInput) {
                         ]
                     },
                     Runtime: 'nodejs14.x',
-                    Timeout: 6
-                    // Environment: {
-                    //     Variables: {
-                    //         // ...future feature add
-                    //     }
-                    // }
+                    Timeout: props.timeout || 6,
+                    Environment: {
+                        Variables: props.env || {}
+                    },
+                    Layers: props.layers || []
                 },
                 DependsOn: [`Lambda${props.name}${props.stage}LogGroup`]
             },
@@ -93,7 +125,7 @@ export function makeLambda(props: MakeLambdaInput) {
                             PolicyName: `Lambda${props.appName}${props.name}${props.stage}RolePolicy`,
                             PolicyDocument: {
                                 Version: '2012-10-17',
-                                Statement: props.permissions
+                                Statement: permissions
                             }
                         }
                     ],

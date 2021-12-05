@@ -48,16 +48,14 @@ export function makeCognitoPoolAndClient(name: string) {
             }
         },
         Outputs: {
-            Outputs: {
-                UserPoolId: {
-                    Value: {
-                        Ref: 'CognitoUserPool'
-                    }
-                },
-                UserPoolClientId: {
-                    Value: {
-                        Ref: 'CognitoUserPoolClient'
-                    }
+            UserPoolId: {
+                Value: {
+                    Ref: 'CognitoUserPool'
+                }
+            },
+            UserPoolClientId: {
+                Value: {
+                    Ref: 'CognitoUserPoolClient'
                 }
             }
         }

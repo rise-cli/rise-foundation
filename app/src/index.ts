@@ -4,6 +4,7 @@ import getFile from './s3/get_file'
 import uploadFile from './s3/upload_file'
 import removeFile from './s3/remove_file'
 import makeBucket from './s3/cf/bucket'
+import makeSimpleBucket from './s3/cf/makeSimpleBucket'
 
 // DB
 import { getDbItem, listDbItems, setDbItem, removeDbItem } from './db/db'
@@ -25,10 +26,24 @@ import { getCloudFormationOutputs } from './cloudformation/getOutputs'
 import { getRemoveStatus } from './cloudformation/getRemoveStatus'
 import { removeStack } from './cloudformation/removeStack'
 
+// Lambda
+import { updateLambdaCode } from './lambda/updateLambdaCode'
+import { makeLambda } from './lambda/cf/makeLambda'
+import { makeLambdaLayer } from './lambda/cf/makeLambdaLayer'
+
+// CodeStar
+import { makeArtifactBucket } from './codestar/cf/makeArtifactBucket'
+import { makeGithubConnection } from './codestar/cf/makeGithubConnection'
+import { makeBuildProject } from './codestar/cf/makeBuildProject'
+import { makePipeline } from './codestar/cf/makePipeline'
+import { putJobSuccess } from './codestar/putJobSuccess'
+import { putJobFailure } from './codestar/putJobFailure'
+
 export default {
     s3: {
         cf: {
-            makeBucket
+            makeBucket,
+            makeSimpleBucket
         },
         uploadFile,
         getFile,
@@ -61,5 +76,22 @@ export default {
         getCloudFormationOutputs,
         removeStack,
         getRemoveStatus
+    },
+    lambda: {
+        cf: {
+            makeLambda,
+            makeLambdaLayer
+        },
+        updateLambdaCode
+    },
+    codestar: {
+        cf: {
+            makeArtifactBucket,
+            makeGithubConnection,
+            makeBuildProject,
+            makePipeline
+        },
+        putJobSuccess,
+        putJobFailure
     }
 }
