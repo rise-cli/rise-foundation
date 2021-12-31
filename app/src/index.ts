@@ -39,6 +39,14 @@ import { makePipeline } from './codestar/cf/makePipeline'
 import { putJobSuccess } from './codestar/putJobSuccess'
 import { putJobFailure } from './codestar/putJobFailure'
 
+// CloudWatch
+import { makeDashboard } from './cloudwatch/cf/makeDashboard'
+import { makeLambdaErrorAlarm } from './cloudwatch/cf/makeLambdaErrorAlarm'
+
+// Step Functions
+import { makeStepFunction } from './stepfunctions/cf/makeStepFunction'
+import { updateStepFunctionDefinition } from './stepfunctions/updateStepFunctionDefinition'
+
 export default {
     s3: {
         cf: {
@@ -93,5 +101,17 @@ export default {
         },
         putJobSuccess,
         putJobFailure
+    },
+    cloudwatch: {
+        cf: {
+            makeDashboard,
+            makeLambdaErrorAlarm
+        }
+    },
+    stepfunctions: {
+        cf: {
+            makeStepFunction
+        },
+        updateStepFunctionDefinition
     }
 }

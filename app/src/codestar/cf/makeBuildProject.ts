@@ -12,7 +12,7 @@ export function makeBuildProject(props: {
 
     return {
         Resources: {
-            CodeBuildProjectBuildAndPackage: {
+            ['CodeBuild' + props.name]: {
                 Type: 'AWS::CodeBuild::Project',
                 Properties: {
                     Artifacts: {

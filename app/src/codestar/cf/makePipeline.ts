@@ -38,10 +38,25 @@ type BuildActionInput = {
     outputArtifact: string
 }
 const makeBuildAction = (config: BuildActionInput) => {
+    type EnvType = 'PARAMETER_STORE' | 'SECRETS_MANAGER' | 'PLAINTEXT'
     const envVariables = Object.keys(config.env).map((k: string) => {
+        let v = config.env[k]
+        let type: EnvType = 'PLAINTEXT'
+
+        if (v.startsWith('@ssm.')) {
+            v = v.split('@ssm.').slice(1).join()
+            type = 'PARAMETER_STORE'
+        }
+
+        if (v.startsWith('@secret.')) {
+            v = v.split('@secret.').slice(1).join()
+            type = 'SECRETS_MANAGER'
+        }
+
         return {
             name: k,
-            value: config.env[k]
+            value: v,
+            type
         }
     })
     return {
@@ -109,11 +124,70 @@ const makeApprovalAction = (config: ApprovalActionInput) => {
     }
 }
 
+type DeployActionInput = {
+    type: 'DEPLOY'
+    name: string
+    inputArtifact: string
+    stackName: string
+    template: string
+    parameters: Record<string, string>
+}
+const makeDeployAction = (config: DeployActionInput) => {
+    type EnvType = 'PARAMETER_STORE' | 'SECRETS_MANAGER' | 'PLAINTEXT'
+    const envVariables = Object.keys(config.parameters).map((k: string) => {
+        let v = config.parameters[k]
+        let type: EnvType = 'PLAINTEXT'
+
+        if (v.startsWith('@ssm.')) {
+            v = v.split('@ssm.').slice(1).join()
+            type = 'PARAMETER_STORE'
+        }
+
+        if (v.startsWith('@secret.')) {
+            v = v.split('@secret.').slice(1).join()
+            type = 'SECRETS_MANAGER'
+        }
+
+        return {
+            name: k,
+            value: v,
+            type
+        }
+    })
+    return {
+        Name: config.name,
+        ActionTypeId: {
+            Category: 'Deploy',
+            Owner: 'AWS',
+            Provider: 'CloudFormation',
+            Version: '1'
+        },
+        Configuration: {
+            ActionMode: 'CREATE_UPDATE',
+            Capabilities: 'CAPABILITY_NAMED_IAM,CAPABILITY_AUTO_EXPAND',
+            ParameterOverrides: JSON.stringify(envVariables),
+            RoleArn: {
+                'Fn::GetAtt': ['CodePipelineServiceRole', 'Arn']
+            },
+            StackName: config.stackName,
+
+            TemplatePath: `${config.inputArtifact}::${config.template}`
+        },
+        OutputArtifacts: [],
+        InputArtifacts: [
+            {
+                Name: config.inputArtifact
+            }
+        ]
+    }
+}
+
 type Action =
     | SourceActionInput
     | BuildActionInput
     | InvokeActionInput
     | ApprovalActionInput
+    | DeployActionInput
 
 type StageInput = {
     name: string
@@ -126,6 +200,7 @@ const makeStage = (config: StageInput) => {
         if (x.type === 'BUILD') return makeBuildAction(x)
         if (x.type === 'INVOKE') return makeInvokeAction(x)
         if (x.type === 'APPROVAL') return makeApprovalAction(x)
+        if (x.type === 'DEPLOY') return makeDeployAction(x)
         throw new Error('Not a valid action')
     })
 
