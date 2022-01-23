@@ -6,7 +6,7 @@
     "types": "dist/index.d.ts",
     "scripts": {
         "test": "echo \"Error: no test specified\" && exit 1",
-        "build": "tsc",
+        "build": "./node_modules/.bin/tsc",
         "publish": "npm run build && npm publish",
         "ci:test:db": "node_modules/.bin/jest src/db/db.test",
         "ci:test:s3": "node_modules/.bin/jest src/s3/s3.test",
