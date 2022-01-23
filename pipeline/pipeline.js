@@ -48,6 +48,7 @@ module.exports = {
                 {
                     type: 'VERCEL',
                     name: 'DeployDocs',
+                    prod: true,
                     path: './docs',
                     token: '@secret.VERCEL_TOKEN'
                 }
@@ -55,3 +56,5 @@ module.exports = {
         }
     ]
 }
+
+459134

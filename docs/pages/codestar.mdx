@@ -48,6 +48,97 @@ const result = rise.codestar.makeBuildProject({
 
 ## codestar.cf.makePipeline
 
+A pipeline definition includes a name and an array of stages, which also
+have a name and an array of actions. The basic structure is as follows:
+
+```ts
+const pipelineDefinition = {
+    name: 'mypipeline',
+    stages: [
+        {
+            name: 'StageA',
+            actions: [actionA, actionB, actionC, actionD]
+        },
+        {
+            name: 'StageB',
+            actions: [actionA, actionB, actionC, actionD]
+        }
+    ]
+}
+```
+
+Pipelines can take the following actions:
+
+#### Source Action
+
+```ts
+const action = {
+    type: 'SOURCE',
+    name: 'nameOfAction',
+    owner: 'githubAccount',
+    repo: 'githubRepo',
+    // optional
+    outputArtifact: 'nameOfZip'
+}
+```
+
+#### Build Action
+
+```ts
+const action = {
+    type: 'BUILD',
+    name: 'nameOfAction',
+    projectCFName: 'cloudFormationNameOfBuildProject',
+    // optional
+    env: {
+        ENVNAME: 'ENVVALUE'
+    },
+    // optional
+    inputArtifact: 'nameOfSourceZip',
+    // optional
+    outputArtifact: 'nameOfZip'
+}
+```
+
+#### Deploy Action
+
+```ts
+const action = {
+    type: 'DEPLOY',
+    name: 'nameOfAction',
+    stackName: 'myStack',
+    template: 'path/to/my/tamplate.yml',
+    //optional
+    inputArtifact: 'nameOfZip',
+    // optional
+    parameters: {
+        ENVNAME: 'ENVVALUE'
+    }
+}
+```
+
+#### Invoke Action
+
+```ts
+const action = {
+    type: 'INVOKE',
+    name: 'nameOfAction',
+    functionName: 'nameOfLambdaFunction',
+    region: 'us-east-1'
+}
+```
+
+#### Approval Action
+
+```ts
+const action = {
+    type: 'APPROVAL',
+    name: 'nameOfAction'
+}
+```
+
+#### Pipeline Example
+
 ```ts
 import rise from 'rise-foundation'
 const result = {
