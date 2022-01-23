@@ -38,8 +38,6 @@ Resources:
     IntegrationTestS3Bucket:
         Type: 'AWS::S3::Bucket'
         DeletionPolicy: Delete
-        Properties:
-            BucketName: rise-foundation-integration-test-bucket
     CognitoUserPoolMyUserPool:
         Type: AWS::Cognito::UserPool
         Properties:
@@ -61,6 +59,11 @@ Resources:
                 - ADMIN_NO_SRP_AUTH
             GenerateSecret: false
 Outputs:
+    BucketName:
+        Description: Bucket Name
+        Value: !Ref IntegrationTestS3Bucket
+        Export:
+            Name: RiseFoundationIntegrationTest-bucket
     CognitoUserPoolId:
         Description: Cognito User Pood Id
         Value: !Ref CognitoUserPoolMyUserPool
