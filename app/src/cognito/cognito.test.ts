@@ -8,6 +8,9 @@ import { refreshTokens } from './loginRefreshToken'
 import aws from 'aws-sdk'
 import { makeCognitoPoolAndClient } from './cf/makeCognitoPoolAndClient'
 
+const SECOND = 1000
+jest.setTimeout(SECOND * 60)
+
 const cloudformation = new aws.CloudFormation({
     region: 'us-east-1'
 })

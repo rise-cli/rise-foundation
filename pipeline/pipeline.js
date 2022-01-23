@@ -22,6 +22,13 @@ module.exports = {
                     inputArtifact: 'sourceZip',
                     stackName: 'RiseFoundationTestStack',
                     template: 'app/infrastructure/integrationTestStack.yml'
+                },
+                {
+                    type: 'BUILD',
+                    name: 'RunTests',
+                    script: '/test.yml',
+                    inputArtifact: 'sourceZip',
+                    outputArtifact: 'testZip'
                 }
             ]
         }
