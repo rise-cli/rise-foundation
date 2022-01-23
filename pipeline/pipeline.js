@@ -21,7 +21,7 @@ module.exports = {
                     name: 'DeployTestResources',
                     inputArtifact: 'sourceZip',
                     stackName: 'RiseFoundationTestStack',
-                    template: 'app/infrastrcture/integrationTestStack.yml'
+                    template: 'app/infrastructure/integrationTestStack.yml'
                 }
             ]
         }
