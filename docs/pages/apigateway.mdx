@@ -1,0 +1,17 @@
+# Api Gateway
+
+## Introduction
+
+Api Gateway is...
+
+## apigateway.cf.makeLambdaEndpoint
+
+```ts
+import rise from 'rise-foundation'
+const endpointCloudformation = rise.apigateway.cf.makeLambdaEndpoint({
+    endpointName: 'MyEndpoint',
+    lambdaName: 'MainLambbda',
+    stage: 'dev',
+    path: 'graphql'
+})
+```

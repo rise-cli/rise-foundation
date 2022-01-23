@@ -1,0 +1,13 @@
+{
+    "index": "Introduction",
+    "howto": "How To",
+    "dynamodb": "🌲 Dynamo DB",
+    "s3": "🌲 S3",
+    "cognito": "🌲 Cognito",
+    "cloudformation": "🌿 CloudFormation",
+    "lambda": "🌿 Lambda",
+    "stepfunctions": "🌿 StepFunctions",
+    "codestar": "🌿 CodeStar",
+    "cloudwatch": "🌿 CloudWatch",
+    "apigateway": "🌱 Api Gateway"
+}

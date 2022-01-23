@@ -48,7 +48,7 @@ Resources:
             AdminCreateUserConfig:
                 AllowAdminCreateUserOnly: true
                 InviteMessageTemplate:
-                    EmailSubject: You are being invited to join Grandvalley Strawberries
+                    EmailSubject: You are being invited to join
                 UnusedAccountValidityDays: 365
 
     CognitoUserPoolClient:

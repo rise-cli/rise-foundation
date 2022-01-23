@@ -133,27 +133,6 @@ type DeployActionInput = {
     parameters: Record<string, string>
 }
 const makeDeployAction = (config: DeployActionInput) => {
-    type EnvType = 'PARAMETER_STORE' | 'SECRETS_MANAGER' | 'PLAINTEXT'
-    const envVariables = Object.keys(config.parameters).map((k: string) => {
-        let v = config.parameters[k]
-        let type: EnvType = 'PLAINTEXT'
-
-        if (v.startsWith('@ssm.')) {
-            v = v.split('@ssm.').slice(1).join()
-            type = 'PARAMETER_STORE'
-        }
-
-        if (v.startsWith('@secret.')) {
-            v = v.split('@secret.').slice(1).join()
-            type = 'SECRETS_MANAGER'
-        }
-
-        return {
-            name: k,
-            value: v,
-            type
-        }
-    })
     return {
         Name: config.name,
         ActionTypeId: {
@@ -165,7 +144,7 @@ const makeDeployAction = (config: DeployActionInput) => {
         Configuration: {
             ActionMode: 'CREATE_UPDATE',
             Capabilities: 'CAPABILITY_NAMED_IAM,CAPABILITY_AUTO_EXPAND',
-            ParameterOverrides: JSON.stringify(envVariables),
+            ParameterOverrides: JSON.stringify(config.parameters),
             RoleArn: {
                 'Fn::GetAtt': ['CodePipelineServiceRole', 'Arn']
             },

@@ -1,0 +1,78 @@
+# Cognito
+
+## Introduction
+
+Cognito is a great way to manage users for you app, and to handle authenticated http calls and
+user login.
+
+## cognito.createUser
+
+```ts
+import rise from 'rise-foundation'
+const user = await rise.cognito.createUser({
+    email: 'example@gmail.com',
+    userPoolId: 'pool_1234'
+})
+```
+
+## cognito.resetPassword
+
+```ts
+import rise from 'rise-foundation'
+await rise.cognito.resetPassword({
+    email: 'example@gmail.com',
+    userPoolId: 'pool_1234'
+})
+```
+
+## cognito.removeUser
+
+```ts
+import rise from 'rise-foundation'
+const removedUser = await rise.cognito.removeUser({
+    email: 'example@gmail.com',
+    userPoolId: 'pool_1234'
+})
+```
+
+## cognito.loginUser
+
+```ts
+import rise from 'rise-foundation'
+const tokens = await rise.cognito.loginUser({
+    userName: 'example@gmail.com',
+    password: '****',
+    userPoolId: 'pool_1234',
+    clientId: 'client_1234'
+})
+```
+
+## cognito.loginHandleNewPassword
+
+```ts
+import rise from 'rise-foundation'
+const tokens = await rise.cognito.loginHandleNewPassword({
+    session: 'session_string',
+    userName: 'example@gmail.com',
+    newPassword: '****',
+    userPoolId: 'pool_1234',
+    clientId: 'client_1234'
+})
+```
+
+## cognito.validateToken
+
+```ts
+import rise from 'rise-foundation'
+const validateResponse = await rise.cognito.validateToken({
+    token: 'JWT_TOKEN',
+    userPoolId: 'pool_1234'
+})
+```
+
+## cognito.cf.makeCognitoPoolAndClient
+
+```ts
+import rise from 'rise-foundation'
+const cognito = foundation.cognito.cf.makeCognitoPoolAndClient('myAppName')
+```

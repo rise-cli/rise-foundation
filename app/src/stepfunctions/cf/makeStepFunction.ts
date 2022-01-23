@@ -10,46 +10,46 @@ interface AlarmInput {
 
 export function makeStepFunction(config: AlarmInput) {
     const basePermissions: any[] = [
-        // {
-        //     Action: ['logs:CreateLogStream'],
-        //     Resource: [
-        //         {
-        //             'Fn::Sub': [
-        //                 `arn:aws:logs:\${AWS::Region}:\${AWS::AccountId}:log-group:/aws/lambda/${props.appName}-${props.name}-${props.stage}:*`,
-        //                 {}
-        //             ]
-        //         }
-        //     ],
-        //     Effect: 'Allow'
-        // },
-        // {
-        //     Action: ['logs:PutLogEvents'],
-        //     Resource: [
-        //         {
-        //             'Fn::Sub': [
-        //                 `arn:aws:logs:\${AWS::Region}:\${AWS::AccountId}:log-group:/aws/lambda/${props.appName}-${props.name}-${props.stage}:*:*`,
-        //                 {}
-        //             ]
-        //         }
-        //     ],
-        //     Effect: 'Allow'
-        // }
+        {
+            Action: ['logs:CreateLogStream'],
+            Resource: [
+                {
+                    'Fn::Sub': [
+                        `arn:aws:logs:\${AWS::Region}:\${AWS::AccountId}:log-group:/aws/states/${config.appName}-${config.name}-${config.stage}:*`,
+                        {}
+                    ]
+                }
+            ],
+            Effect: 'Allow'
+        },
+        {
+            Action: ['logs:PutLogEvents'],
+            Resource: [
+                {
+                    'Fn::Sub': [
+                        `arn:aws:logs:\${AWS::Region}:\${AWS::AccountId}:log-group:/aws/states/${config.appName}-${config.name}-${config.stage}:*:*`,
+                        {}
+                    ]
+                }
+            ],
+            Effect: 'Allow'
+        }
     ]
 
     const permissions = [...basePermissions, ...config.permissions]
 
-    return {
+    let cf = {
         Resources: {
             /**
              * Log Group
              *
              */
-            [`Lambda${config.name}${config.stage}LogGroup`]: {
-                Type: 'AWS::Logs::LogGroup',
-                Properties: {
-                    LogGroupName: `/aws/lambda/${config.appName}-${config.name}-${config.stage}`
-                }
-            },
+            // [`StepFunction${config.name}${config.stage}LogGroup`]: {
+            //     Type: 'AWS::Logs::LogGroup',
+            //     Properties: {
+            //         LogGroupName: `/aws/lambda/${config.appName}-${config.name}-${config.stage}`
+            //     }
+            // },
 
             /**
              * StepFunction
@@ -61,7 +61,7 @@ export function makeStepFunction(config: AlarmInput) {
                     // "Definition" : config.definition,
                     //  "DefinitionS3Location" : S3Location,
                     DefinitionString: config.definition,
-                    DefinitionSubstitutions: config.substitution,
+                    //       DefinitionSubstitutions: config.substitution,
                     //LoggingConfiguration: LoggingConfiguration,
                     RoleArn: {
                         'Fn::GetAtt': [
@@ -111,4 +111,23 @@ export function makeStepFunction(config: AlarmInput) {
         },
         Outputs: {}
     }
+
+    if (Object.keys(config.substitution).length > 0) {
+        // cf.Resources[
+        //     `StepFunction${config.name}${config.stage}`
+        //     //@ts-ignore
+        // ].Properties.DefinitionSubstitutions = config.substitution
+
+        //@ts-ignore
+        cf.Resources[
+            `StepFunction${config.name}${config.stage}`
+            //@ts-ignore
+        ].Properties.DefinitionString = {
+            'Fn::Sub': [config.definition, config.substitution]
+        }
+
+        // config.substitution
+    }
+
+    return cf
 }

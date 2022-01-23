@@ -1,0 +1,54 @@
+# CloudWatch
+
+## Introduction
+
+Placeholder description...
+
+## cloudwatch.cf.makeDashboard
+
+```ts
+import rise from 'rise-foundation'
+const markdown = `# Title
+## Subtitle
+Markdown that will show up in dashboard
+`
+const dashboard = foundation.cloudwatch.cf.makeDashboard({
+    name: 'myDashboard',
+    rows: [
+        {
+            type: 'LAMBDAROW',
+            verticalPosition: 0,
+            name: 'nameOfRow',
+            region: 'us-east-1',
+            functionName: `functionName`,
+            docs: markdown,
+            invocationAlarm: 0,
+            invocationGoal: 10,
+            errorAlarm: 2,
+            errorGoal: 0,
+            durationAlarm: 20000,
+            durationGoal: 1000
+        }
+    ]
+})
+```
+
+## cloudwatch.cf.makeLambdaErrorAlarm
+
+```ts
+import rise from 'rise-foundation'
+const markdown = `# Title
+## Subtitle
+Markdown that will show up in dashboard
+`
+const dashboard = foundation.cloudwatch.cf.makeLambdaErrorAlarm({
+    // required
+    name: 'nameOfAlarm',
+    description: 'description of alarm',
+    functionName: 'lambda name',
+    threshold: 2,
+    // optional
+    period: 300,
+    evaluationPeriods: 3
+})
+```

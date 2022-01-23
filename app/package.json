@@ -1,6 +1,6 @@
 {
     "name": "rise-foundation",
-    "version": "0.0.21",
+    "version": "0.0.32",
     "description": "",
     "main": "dist/index.js",
     "types": "dist/index.d.ts",
@@ -8,9 +8,9 @@
         "test": "echo \"Error: no test specified\" && exit 1",
         "build": "tsc",
         "publish": "npm run build && npm publish",
-        "ci:test:db": "node_modules/.bin/jest db.test",
+        "ci:test:db": "node_modules/.bin/jest src/db/db.test",
         "ci:test:s3": "node_modules/.bin/jest s3.test",
-        "ci:test:cognito": "node_modules/.bin/jest cognito.test"
+        "ci:test:cognito": "node_modules/.bin/jest src/cognito/cognito.test"
     },
     "keywords": [],
     "author": "",

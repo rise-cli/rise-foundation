@@ -1,0 +1,100 @@
+# CloudStar
+
+## Introduction
+
+CodeStar is a umbrella term refering to all of AWS's code services, such as:
+
+-   CodeCommit (a repo service like github or bitbucket)
+-   CodeBuild (a service that spins up a terminal to run build, test, and deploy commands)
+-   CodeDeploy (a service that manages deploying CloudFormation templates)
+-   CodePipeline (a service to arrange the above services in a sequence)
+
+## codestar.cf.makeGithubConnection
+
+```ts
+import rise from 'rise-foundation'
+const result = rise.codestar.makeGithubConnection('nameOfMyPipeline')
+```
+
+## codestar.cf.makeArtifactBucket
+
+```ts
+import rise from 'rise-foundation'
+const result = rise.codestar.makeArtifactBucket('nameOfMyPipeline')
+```
+
+## codestar.cf.makeBuildProject
+
+```ts
+import rise from 'rise-foundation'
+const buildSpec = `version: 0.2
+phases:
+    install:
+        runtime-versions:
+            nodejs: 14
+
+    build:
+        commands:
+            - echo "building test $REGION"
+`
+const result = rise.codestar.makeBuildProject({
+    name: 'cfNameOfResource',
+    buildSpec: buildSpec,
+    env: {
+        DB: 'mydb'
+    }
+})
+```
+
+## codestar.cf.makePipeline
+
+```ts
+import rise from 'rise-foundation'
+const result = {
+    pipelineName: 'nameOfMyPipeline',
+    stages: [
+        {
+            name: 'source',
+            actions: [
+                {
+                    type: 'SOURCE',
+                    name: 'source',
+                    repo: 'myRepo',
+                    owner: 'myGithubName',
+                    outputArtifact: 'sourceZip'
+                }
+            ]
+        },
+        {
+            name: 'build',
+            actions: [
+                {
+                    type: 'BUILD',
+                    name: 'build',
+                    projectCFName: 'cfNameOfResource',
+                    env: {
+                        REGION: 'ca-central-1'
+                    },
+                    inputArtifact: 'sourceZip',
+                    outputArtifact: 'buildZip'
+                }
+            ]
+        },
+        {
+            name: 'Prod',
+            actions: [
+                {
+                    type: 'APPROVAL',
+                    name: 'designerappoval'
+                },
+                {
+                    type: 'INVOKE',
+                    name: 'integrationtests',
+                    functionName: 'nameOfMyLambda',
+                    region: 'us-east-1'
+                }
+            ]
+        }
+    ]
+}
+```

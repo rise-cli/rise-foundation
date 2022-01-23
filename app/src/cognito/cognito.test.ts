@@ -6,11 +6,13 @@ import { validateToken } from './validateJwtToken'
 import { resetPassword } from './resetPassword'
 import { refreshTokens } from './loginRefreshToken'
 import aws from 'aws-sdk'
+import { makeCognitoPoolAndClient } from './cf/makeCognitoPoolAndClient'
+
+const cloudformation = new aws.CloudFormation({
+    region: 'us-east-1'
+})
 
 async function getCognitoIds(props: { stack: string; outputs: string[] }) {
-    const cloudformation = new aws.CloudFormation({
-        region: 'us-east-1'
-    })
     function getOutput(outputs: any[], value: string) {
         const v = outputs.find((x) => x.OutputKey === value)
         return v ? v.OutputValue : false
@@ -30,6 +32,17 @@ async function getCognitoIds(props: { stack: string; outputs: string[] }) {
     }
     return res
 }
+
+test('cf.makeCognitoPoolAndClient CloudFormation is valid', async () => {
+    const x = makeCognitoPoolAndClient('my-test-cognito')
+    const res: any = await cloudformation
+        .validateTemplate({
+            TemplateBody: JSON.stringify(x)
+        })
+        .promise()
+
+    expect(res.ResponseMetadata.RequestId).toBeTruthy()
+})
 
 test('cognito user management works', async () => {
     const { CognitoUserPoolId, CognitoUserPoolClientId } = await getCognitoIds({

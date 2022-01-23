@@ -1,0 +1,36 @@
+# StepFunctions
+
+## Introduction
+
+StepFunctions is...
+
+## stepfunctions.cf.makeStepFunction
+
+```ts
+import rise from 'rise-foundation'
+const stepfunctionCloudformation = rise.stepfunctions.cf.makeStepFunction({
+    appName: 'nameOfApp',
+    name: 'nameOfStepFunction',
+    stage: 'dev',
+    definition: 'stepfunction JSON definition',
+    substitution: {
+        DB: 'arn:db:...'
+    },
+    permissions: [
+        {
+            Action: 'something',
+            Resources: '*'
+        }
+    ]
+})
+```
+
+## stepfunctions.updateStepFunctionDefinition
+
+```ts
+import rise from 'rise-foundation'
+const result = await rise.stepfunctions.updateStepFunctionDefinition({
+    arn: 'arn:of:stepfunction',
+    definition: 'stepfunction JSON definition'
+})
+```

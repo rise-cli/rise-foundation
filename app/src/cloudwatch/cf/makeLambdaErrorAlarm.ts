@@ -1,19 +1,22 @@
 interface AlarmInput {
+    appName: string
+    stage: string
     name: string
     description: string
     functionName: string
     threshold: number
     period?: number
     evaluationPeriods?: number
+    snsTopic?: string
 }
 
 export function makeLambdaErrorAlarm(config: AlarmInput) {
-    return {
+    let cf = {
         Resources: {
-            [config.name + 'Alarm']: {
+            [`Alarm${config.name}${config.stage}`]: {
                 Type: 'AWS::CloudWatch::Alarm',
                 Properties: {
-                    AlarmName: config.name,
+                    AlarmName: `${config.appName}-${config.name}-${config.stage}`,
                     AlarmDescription: config.description,
                     MetricName: 'Errors',
                     Namespace: 'AWS/Lambda',
@@ -33,4 +36,13 @@ export function makeLambdaErrorAlarm(config: AlarmInput) {
         },
         Outputs: {}
     }
+
+    if (config.snsTopic) {
+        cf.Resources[
+            `Alarm${config.name}${config.stage}`
+            // @ts-ignore
+        ].Properties.AlarmActions = [config.snsTopic]
+    }
+
+    return cf
 }

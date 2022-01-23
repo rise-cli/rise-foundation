@@ -38,7 +38,7 @@ const makeAnnotations = (goal?: number, alarm?: number) => {
     }
     if (alarm !== undefined) {
         annotations.push({
-            color: '##62728',
+            color: '#d62728',
             label: 'Alarm',
             value: alarm
         })
