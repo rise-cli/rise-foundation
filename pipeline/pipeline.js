@@ -41,7 +41,7 @@ module.exports = {
                     type: 'DEPLOY',
                     name: 'DeployApi',
                     inputArtifact: 'sourceZip',
-                    stackName: 'RiseFoundationTestAPi',
+                    stackName: 'RiseFoundationTestApi',
                     template: 'app/infrastructure/apiStack.json'
                 },
                 {

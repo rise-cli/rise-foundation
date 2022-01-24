@@ -1,5 +1,5 @@
 import { deployStack } from '../cloudformation/deployStack'
-import { makeLambdaeEndpoint } from './cf/makeLambdaEndpoint'
+import { makeLambdaEndpoint } from './cf/makeLambdaEndpoint'
 import { makeInlineLambda } from '../lambda/cf/makeInlineLambda'
 
 const STACK_NAME = 'RiseFoundationTestApi'
@@ -7,7 +7,7 @@ const SECOND = 1000
 jest.setTimeout(SECOND * 60)
 
 test('cf.makeBucket CloudFormation is valid', async () => {
-    const api = makeLambdaeEndpoint({
+    const api = makeLambdaEndpoint({
         endpointName: 'testEndpoint',
         lambdaName: 'Lambdabluedev',
         stage: 'dev',
@@ -19,7 +19,7 @@ test('cf.makeBucket CloudFormation is valid', async () => {
         name: 'blue',
         stage: 'dev',
         permissions: [],
-        code: `module.exports = async () => {
+        code: `module.exports.handler = async () => {
         return {
             statusCode: 200,
             body: JSON.stringify({ status: "ok"})

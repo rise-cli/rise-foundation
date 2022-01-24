@@ -116,7 +116,7 @@
             "Type": "AWS::Lambda::Function",
             "Properties": {
                 "Code": {
-                    "ZipFile": "module.exports = async () => {\n        return {\n            statusCode: 200,\n            body: JSON.stringify({ status: \"ok\"})\n        }\n    }"
+                    "ZipFile": "module.exports.handler = async () => {\n        return {\n            statusCode: 200,\n            body: JSON.stringify({ status: \"ok\"})\n        }\n    }"
                 },
                 "FunctionName": "red-blue-dev",
                 "Handler": "index.handler",

@@ -5,7 +5,7 @@ type Input = {
     path: string
 }
 
-export function makeLambdaeEndpoint(props: Input) {
+export function makeLambdaEndpoint(props: Input) {
     return {
         Resources: {
             ApiGatewayRestApi: {
