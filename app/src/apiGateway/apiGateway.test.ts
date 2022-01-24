@@ -11,7 +11,7 @@ test('cf.makeBucket CloudFormation is valid', async () => {
         endpointName: 'testEndpoint',
         lambdaName: 'Lambdabluedev',
         stage: 'dev',
-        path: '/api'
+        path: 'api'
     })
 
     const lambda = makeInlineLambda({

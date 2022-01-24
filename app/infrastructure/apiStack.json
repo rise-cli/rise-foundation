@@ -16,7 +16,7 @@
                 "ParentId": {
                     "Fn::GetAtt": ["ApiGatewayRestApi", "RootResourceId"]
                 },
-                "PathPart": "/api",
+                "PathPart": "api",
                 "RestApiId": {
                     "Ref": "ApiGatewayRestApi"
                 }
