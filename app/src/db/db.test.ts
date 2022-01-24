@@ -1,22 +1,21 @@
 import { getDbItem, listDbItems, setDbItem, removeDbItem } from './db'
 import { makeDb } from './cf/makeDb'
-import { testUtils } from './_tests/testUtils'
-import AWS from 'aws-sdk'
-const cf = new AWS.CloudFormation({
-    region: 'us-east-1'
-})
-process.env.TABLE = 'RiseFoundationIntegrationTestTable'
+import { deployStack } from '../cloudformation/deployStack'
 
-test('cf.makeDb Cloudformation is valid', async () => {
-    const x = makeDb('my-test')
+const STACK_NAME = 'RiseFoundationTestDB'
+const SECOND = 1000
 
-    const res: any = await cf
-        .validateTemplate({
-            TemplateBody: JSON.stringify(x)
-        })
-        .promise()
+jest.setTimeout(SECOND * 60)
+process.env.TABLE = 'mytestdb'
 
-    expect(res.ResponseMetadata.RequestId).toBeTruthy()
+test('cf.makeDb creates Cloudformation correctly', async () => {
+    const x = makeDb('mytestdb')
+    const res = await deployStack({
+        name: STACK_NAME,
+        template: JSON.stringify(x)
+    })
+
+    expect(res.status).toBe('nothing')
 })
 
 test('db works', async () => {

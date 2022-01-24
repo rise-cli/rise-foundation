@@ -7,7 +7,9 @@ import { resetPassword } from './resetPassword'
 import { refreshTokens } from './loginRefreshToken'
 import aws from 'aws-sdk'
 import { makeCognitoPoolAndClient } from './cf/makeCognitoPoolAndClient'
+import { deployStack } from '../cloudformation/deployStack'
 
+const STACK_NAME = 'RiseFoundationTestCognito'
 const SECOND = 1000
 jest.setTimeout(SECOND * 60)
 
@@ -38,24 +40,31 @@ async function getCognitoIds(props: { stack: string; outputs: string[] }) {
 
 test('cf.makeCognitoPoolAndClient CloudFormation is valid', async () => {
     const x = makeCognitoPoolAndClient('mytestcognito')
-    console.log(JSON.stringify(x, null, 2))
-    const res: any = await cloudformation
-        .validateTemplate({
-            TemplateBody: JSON.stringify(x)
-        })
-        .promise()
 
-    expect(res.ResponseMetadata.RequestId).toBeTruthy()
+    const res = await deployStack({
+        name: STACK_NAME,
+        template: JSON.stringify(x)
+    })
+
+    expect(res.status).toBe('nothing')
+
+    // const res: any = await cloudformation
+    //     .validateTemplate({
+    //         TemplateBody: JSON.stringify(x)
+    //     })
+    //     .promise()
+
+    // expect(res.ResponseMetadata.RequestId).toBeTruthy()
 })
 
 test('cognito user management works', async () => {
-    const { CognitoUserPoolId, CognitoUserPoolClientId } = await getCognitoIds({
-        stack: 'RiseFoundationTestStack',
-        outputs: ['CognitoUserPoolId', 'CognitoUserPoolClientId']
+    const { UserPoolId, UserPoolClientId } = await getCognitoIds({
+        stack: STACK_NAME,
+        outputs: ['UserPoolId', 'UserPoolClientId']
     })
 
-    const poolId = CognitoUserPoolId
-    const clientId = CognitoUserPoolClientId
+    const poolId = UserPoolId
+    const clientId = UserPoolClientId
 
     /**
      * Create User

@@ -59,9 +59,7 @@ interface Claim {
 }
 
 let cacheKeys: MapOfKidToPublicKey | undefined
-const getPublicKeys = async (
-    cognitoIssuer: string
-): Promise<MapOfKidToPublicKey> => {
+const getPublicKeys = async (cognitoIssuer: string): Promise<MapOfKidToPublicKey> => {
     if (!cacheKeys) {
         const url = `${cognitoIssuer}/.well-known/jwks.json`
         const publicKeys = await Axios.default.get<PublicKeys>(url)
@@ -78,9 +76,7 @@ const getPublicKeys = async (
 
 const verifyPromised = promisify(jsonwebtoken.verify.bind(jsonwebtoken))
 
-export async function validateToken(
-    props: ValidateJwtInput
-): Promise<ClaimVerifyResult> {
+export async function validateToken(props: ValidateJwtInput): Promise<ClaimVerifyResult> {
     if (process.env.COGNITO_POOL_ID && !props.userPoolId) {
         throw new Error('Must have cognito user pool defined')
     }
@@ -92,15 +88,12 @@ export async function validateToken(
 
     let result: ClaimVerifyResult
     try {
-        console.log(`user claim verify invoked for ${props.token}`)
         const token = props.token
         const tokenSections = (token || '').split('.')
         if (tokenSections.length < 2) {
             throw new Error('requested token is invalid')
         }
-        const headerJSON = Buffer.from(tokenSections[0], 'base64').toString(
-            'utf8'
-        )
+        const headerJSON = Buffer.from(tokenSections[0], 'base64').toString('utf8')
         const header = JSON.parse(headerJSON) as TokenHeader
         const keys = await getPublicKeys(cognitoIssuer)
         const key = keys[header.kid]
@@ -119,7 +112,7 @@ export async function validateToken(
         if (claim.token_use !== 'access') {
             throw new Error('claim use is not access')
         }
-        console.log(`claim confirmed for ${claim.username}`)
+
         result = {
             userName: claim.username,
             clientId: claim.client_id,

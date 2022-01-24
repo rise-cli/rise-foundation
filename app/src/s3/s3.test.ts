@@ -4,7 +4,12 @@ import removeFile from './remove_file'
 import * as fs from 'fs'
 import makeBucket from './cf/bucket'
 import makeSimpleBucket from './cf/makeSimpleBucket'
-import aws, { Outposts } from 'aws-sdk'
+import { deployStack } from '../cloudformation/deployStack'
+import aws from 'aws-sdk'
+
+const STACK_NAME = 'RiseFoundationTestS3'
+const SECOND = 1000
+jest.setTimeout(SECOND * 60)
 
 const cloudformation = new aws.CloudFormation({
     region: 'us-east-1'
@@ -45,20 +50,21 @@ test('cf.makeBucket CloudFormation is valid', async () => {
         }
     }
 
-    const res: any = await cloudformation
-        .validateTemplate({
-            TemplateBody: JSON.stringify(x)
-        })
-        .promise()
+    const res = await deployStack({
+        name: STACK_NAME,
+        template: JSON.stringify(template)
+    })
 
-    expect(res.ResponseMetadata.RequestId).toBeTruthy()
+    expect(res.status).toBe('nothing')
 })
 
 test('s3 functions can upload, get, and remove a file in a bucket', async () => {
-    const { BucketName } = await getOutputs({
-        stack: 'RiseFoundationTestStack',
-        outputs: ['BucketName']
+    const { MysimpletestbucketBucket } = await getOutputs({
+        stack: STACK_NAME,
+        outputs: ['MysimpletestbucketBucket']
     })
+
+    const BucketName = MysimpletestbucketBucket
 
     /**
      * Upload File

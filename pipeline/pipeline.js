@@ -16,13 +16,6 @@ module.exports = {
         {
             name: 'Staging',
             actions: [
-                // {
-                //     type: 'DEPLOY',
-                //     name: 'DeployTestResources',
-                //     inputArtifact: 'sourceZip',
-                //     stackName: 'RiseFoundationTestStack',
-                //     template: 'app/infrastructure/integrationTestStack.yml'
-                // },
                 {
                     type: 'DEPLOY',
                     name: 'DeployDB',
@@ -56,16 +49,16 @@ module.exports = {
         {
             name: 'Prod',
             actions: [
-                // {
-                //     type: 'BUILD',
-                //     name: 'PublishToNpm',
-                //     script: '/publish.yml',
-                //     env: {
-                //         NPM_TOKEN: '@secret.NPM_KEY'
-                //     },
-                //     inputArtifact: 'sourceZip',
-                //     outputArtifact: 'publishedZip'
-                // },
+                {
+                    type: 'BUILD',
+                    name: 'PublishToNpm',
+                    script: '/publish.yml',
+                    env: {
+                        NPM_TOKEN: '@secret.NPM_KEY'
+                    },
+                    inputArtifact: 'sourceZip',
+                    outputArtifact: 'publishedZip'
+                },
                 {
                     type: 'VERCEL',
                     name: 'DeployDocs',

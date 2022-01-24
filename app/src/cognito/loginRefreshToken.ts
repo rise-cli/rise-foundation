@@ -16,9 +16,7 @@ export type RefreshTokenOutput = {
     idToken: string
 }
 
-export async function refreshTokens(
-    props: RefreshTokenInput
-): Promise<RefreshTokenOutput> {
+export async function refreshTokens(props: RefreshTokenInput): Promise<RefreshTokenOutput> {
     var params = {
         AuthFlow: 'REFRESH_TOKEN_AUTH',
         ClientId: props.clientId,
@@ -27,11 +25,8 @@ export async function refreshTokens(
             REFRESH_TOKEN: props.refreshToken
         }
     }
-    const res = await cognitoidentityserviceprovider
-        .adminInitiateAuth(params)
-        .promise()
+    const res = await cognitoidentityserviceprovider.adminInitiateAuth(params).promise()
 
-    console.log('THE RES: ', res)
     const result = res.AuthenticationResult || {}
     if (!result.AccessToken || !result.RefreshToken || !result.IdToken) {
         throw new Error('Unrecognized response from AWS Cognito')
