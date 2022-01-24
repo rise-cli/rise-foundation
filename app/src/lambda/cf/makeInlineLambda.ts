@@ -1,14 +1,12 @@
 export type MakeLambdaInput = {
     appName: string
     name: string
-    stage: String
-    bucketArn: string
-    bucketKey: string
+    stage: string
     permissions: any[]
+    code: string
     env?: any
     handler?: string
     timeout?: number
-    layers?: string[]
 }
 
 /* 
@@ -27,9 +25,7 @@ export type MakeLambdaInput = {
 }
 */
 
-export function makeLambda(props: MakeLambdaInput) {
-    const b = props.bucketArn.split(':::')[1]
-
+export function makeInlineLambda(props: MakeLambdaInput) {
     const basePermissions = [
         {
             Action: ['logs:CreateLogStream'],
@@ -79,8 +75,7 @@ export function makeLambda(props: MakeLambdaInput) {
                 Type: 'AWS::Lambda::Function',
                 Properties: {
                     Code: {
-                        S3Bucket: b,
-                        S3Key: props.bucketKey
+                        ZipFile: props.code
                     },
                     FunctionName: `${props.appName}-${props.name}-${props.stage}`,
                     Handler: props.handler || 'index.handler',
@@ -92,8 +87,7 @@ export function makeLambda(props: MakeLambdaInput) {
                     Timeout: props.timeout || 6,
                     Environment: {
                         Variables: props.env || {}
-                    },
-                    Layers: props.layers || []
+                    }
                 },
                 DependsOn: [`Lambda${props.name}${props.stage}LogGroup`]
             },

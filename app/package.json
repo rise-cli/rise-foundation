@@ -11,7 +11,8 @@
         "ci:test:db": "node_modules/.bin/jest src/db/db.test",
         "ci:test:s3": "node_modules/.bin/jest src/s3/s3.test",
         "ci:test:cognito": "node_modules/.bin/jest src/cognito/cognito.test",
-        "ci:test:cloudformation": "node_modules/.bin/jest src/cloudformation/cloudformation.test"
+        "ci:test:cloudformation": "node_modules/.bin/jest src/cloudformation/cloudformation.test",
+        "ci:test:api": "node_modules/.bin/jest src/apiGateway/apiGateway.test"
     },
     "keywords": [],
     "author": "",

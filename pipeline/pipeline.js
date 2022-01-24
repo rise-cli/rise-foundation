@@ -38,6 +38,13 @@ module.exports = {
                     template: 'app/infrastructure/cognitoStack.json'
                 },
                 {
+                    type: 'DEPLOY',
+                    name: 'DeployApi',
+                    inputArtifact: 'sourceZip',
+                    stackName: 'RiseFoundationTestAPi',
+                    template: 'app/infrastructure/apiStack.json'
+                },
+                {
                     type: 'BUILD',
                     name: 'RunTests',
                     script: '/test.yml',

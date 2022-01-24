@@ -1,0 +1,214 @@
+{
+    "Resources": {
+        "ApiGatewayRestApi": {
+            "Type": "AWS::ApiGateway::RestApi",
+            "Properties": {
+                "Name": "testEndpoint",
+                "EndpointConfiguration": {
+                    "Types": ["EDGE"]
+                },
+                "Policy": ""
+            }
+        },
+        "ApiGatewayResource": {
+            "Type": "AWS::ApiGateway::Resource",
+            "Properties": {
+                "ParentId": {
+                    "Fn::GetAtt": ["ApiGatewayRestApi", "RootResourceId"]
+                },
+                "PathPart": "/api",
+                "RestApiId": {
+                    "Ref": "ApiGatewayRestApi"
+                }
+            }
+        },
+        "ApiGatewayMethodPost": {
+            "Type": "AWS::ApiGateway::Method",
+            "Properties": {
+                "HttpMethod": "POST",
+                "RequestParameters": {},
+                "ResourceId": {
+                    "Ref": "ApiGatewayResource"
+                },
+                "RestApiId": {
+                    "Ref": "ApiGatewayRestApi"
+                },
+                "ApiKeyRequired": false,
+                "AuthorizationType": "NONE",
+                "Integration": {
+                    "IntegrationHttpMethod": "POST",
+                    "Type": "AWS_PROXY",
+                    "Uri": {
+                        "Fn::Join": [
+                            "",
+                            [
+                                "arn:",
+                                {
+                                    "Ref": "AWS::Partition"
+                                },
+                                ":apigateway:",
+                                {
+                                    "Ref": "AWS::Region"
+                                },
+                                ":lambda:path/2015-03-31/functions/",
+                                {
+                                    "Fn::GetAtt": ["Lambdabluedev", "Arn"]
+                                },
+                                "/invocations"
+                            ]
+                        ]
+                    }
+                },
+                "MethodResponses": []
+            }
+        },
+        "ApiGatewayDeployment": {
+            "Type": "AWS::ApiGateway::Deployment",
+            "Properties": {
+                "RestApiId": {
+                    "Ref": "ApiGatewayRestApi"
+                },
+                "StageName": "dev"
+            },
+            "DependsOn": ["ApiGatewayMethodPost"]
+        },
+        "MainLambdaPermissionApiGateway": {
+            "Type": "AWS::Lambda::Permission",
+            "Properties": {
+                "FunctionName": {
+                    "Fn::GetAtt": ["Lambdabluedev", "Arn"]
+                },
+                "Action": "lambda:InvokeFunction",
+                "Principal": "apigateway.amazonaws.com",
+                "SourceArn": {
+                    "Fn::Join": [
+                        "",
+                        [
+                            "arn:",
+                            {
+                                "Ref": "AWS::Partition"
+                            },
+                            ":execute-api:",
+                            {
+                                "Ref": "AWS::Region"
+                            },
+                            ":",
+                            {
+                                "Ref": "AWS::AccountId"
+                            },
+                            ":",
+                            {
+                                "Ref": "ApiGatewayRestApi"
+                            },
+                            "/*/*"
+                        ]
+                    ]
+                }
+            }
+        },
+        "LambdabluedevLogGroup": {
+            "Type": "AWS::Logs::LogGroup",
+            "Properties": {
+                "LogGroupName": "/aws/lambda/red-blue-dev"
+            }
+        },
+        "Lambdabluedev": {
+            "Type": "AWS::Lambda::Function",
+            "Properties": {
+                "Code": {
+                    "ZipFile": "module.exports = async () => {\n        return {\n            statusCode: 200,\n            body: JSON.stringify({ status: \"ok\"})\n        }\n    }"
+                },
+                "FunctionName": "red-blue-dev",
+                "Handler": "index.handler",
+                "MemorySize": 1024,
+                "Role": {
+                    "Fn::GetAtt": ["LambdabluedevRole", "Arn"]
+                },
+                "Runtime": "nodejs14.x",
+                "Timeout": 6,
+                "Environment": {
+                    "Variables": {}
+                }
+            },
+            "DependsOn": ["LambdabluedevLogGroup"]
+        },
+        "LambdabluedevRole": {
+            "Type": "AWS::IAM::Role",
+            "Properties": {
+                "AssumeRolePolicyDocument": {
+                    "Version": "2012-10-17",
+                    "Statement": [
+                        {
+                            "Effect": "Allow",
+                            "Principal": {
+                                "Service": ["lambda.amazonaws.com"]
+                            },
+                            "Action": ["sts:AssumeRole"]
+                        }
+                    ]
+                },
+                "Policies": [
+                    {
+                        "PolicyName": "LambdaredbluedevRolePolicy",
+                        "PolicyDocument": {
+                            "Version": "2012-10-17",
+                            "Statement": [
+                                {
+                                    "Action": ["logs:CreateLogStream"],
+                                    "Resource": [
+                                        {
+                                            "Fn::Sub": [
+                                                "arn:aws:logs:${AWS::Region}:${AWS::AccountId}:log-group:/aws/lambda/red-blue-dev:*",
+                                                {}
+                                            ]
+                                        }
+                                    ],
+                                    "Effect": "Allow"
+                                },
+                                {
+                                    "Action": ["logs:PutLogEvents"],
+                                    "Resource": [
+                                        {
+                                            "Fn::Sub": [
+                                                "arn:aws:logs:${AWS::Region}:${AWS::AccountId}:log-group:/aws/lambda/red-blue-dev:*:*",
+                                                {}
+                                            ]
+                                        }
+                                    ],
+                                    "Effect": "Allow"
+                                }
+                            ]
+                        }
+                    }
+                ],
+                "Path": "/",
+                "RoleName": "LambdaredbluedevRole"
+            }
+        }
+    },
+    "Outputs": {
+        "Endpoint": {
+            "Description": "URL of the endpoint",
+            "Value": {
+                "Fn::Join": [
+                    "",
+                    [
+                        "https://",
+                        {
+                            "Ref": "ApiGatewayRestApi"
+                        },
+                        ".execute-api.",
+                        {
+                            "Ref": "AWS::Region"
+                        },
+                        ".",
+                        {
+                            "Ref": "AWS::URLSuffix"
+                        },
+                        "/dev"
+                    ]
+                ]
+            }
+        }
+    }
+}
