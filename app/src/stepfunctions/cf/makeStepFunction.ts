@@ -3,7 +3,7 @@ interface AlarmInput {
     name: string
     stage: String
     definition: string
-    substitution: string
+    substitution?: string
     permissions: any[]
 }
 //https://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/aws-resource-stepfunctions-statemachine.html
@@ -64,13 +64,10 @@ export function makeStepFunction(config: AlarmInput) {
                     //       DefinitionSubstitutions: config.substitution,
                     //LoggingConfiguration: LoggingConfiguration,
                     RoleArn: {
-                        'Fn::GetAtt': [
-                            `StepFunction${config.name}${config.stage}Role`,
-                            'Arn'
-                        ]
+                        'Fn::GetAtt': [`StepFunction${config.name}${config.stage}Role`, 'Arn']
                     },
 
-                    StateMachineName: config.name,
+                    StateMachineName: `${config.appName}${config.name}${config.stage}`,
                     StateMachineType: 'STANDARD'
 
                     //TracingConfiguration: TracingConfiguration
@@ -112,22 +109,22 @@ export function makeStepFunction(config: AlarmInput) {
         Outputs: {}
     }
 
-    if (Object.keys(config.substitution).length > 0) {
-        // cf.Resources[
-        //     `StepFunction${config.name}${config.stage}`
-        //     //@ts-ignore
-        // ].Properties.DefinitionSubstitutions = config.substitution
+    // if (Object.keys(config.substitution).length > 0) {
+    //     // cf.Resources[
+    //     //     `StepFunction${config.name}${config.stage}`
+    //     //     //@ts-ignore
+    //     // ].Properties.DefinitionSubstitutions = config.substitution
 
-        //@ts-ignore
-        cf.Resources[
-            `StepFunction${config.name}${config.stage}`
-            //@ts-ignore
-        ].Properties.DefinitionString = {
-            'Fn::Sub': [config.definition, config.substitution]
-        }
+    //     //@ts-ignore
+    //     cf.Resources[
+    //         `StepFunction${config.name}${config.stage}`
+    //         //@ts-ignore
+    //     ].Properties.DefinitionString = {
+    //         'Fn::Sub': [config.definition, config.substitution]
+    //     }
 
-        // config.substitution
-    }
+    //     // config.substitution
+    // }
 
     return cf
 }

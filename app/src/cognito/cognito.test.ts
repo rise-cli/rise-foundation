@@ -47,14 +47,6 @@ test('cf.makeCognitoPoolAndClient CloudFormation is valid', async () => {
     })
 
     expect(res.status).toBe('nothing')
-
-    // const res: any = await cloudformation
-    //     .validateTemplate({
-    //         TemplateBody: JSON.stringify(x)
-    //     })
-    //     .promise()
-
-    // expect(res.ResponseMetadata.RequestId).toBeTruthy()
 })
 
 test('cognito user management works', async () => {

@@ -45,6 +45,13 @@ module.exports = {
                     template: 'app/infrastructure/apiStack.json'
                 },
                 {
+                    type: 'DEPLOY',
+                    name: 'DeployStepFunction',
+                    inputArtifact: 'sourceZip',
+                    stackName: 'RiseFoundationTestStepFunction',
+                    template: 'app/infrastructure/stepFunctionStack.json'
+                },
+                {
                     type: 'BUILD',
                     name: 'RunTests',
                     script: '/test.yml',

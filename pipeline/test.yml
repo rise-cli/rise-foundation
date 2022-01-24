@@ -12,3 +12,4 @@ phases:
             - npm run ci:test:cognito
             - npm run ci:test:api
             - npm run ci:test:cloudformation
+            - npm run ci:test:stepfunction
