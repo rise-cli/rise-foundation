@@ -2,8 +2,8 @@ import { deployStack } from './deployStack'
 import { getDeployStatus } from './getDeployStatus'
 import fs from 'fs'
 
-const STACK_NAME = 'RiseFoundationTestStack'
-const TEMPLATE_PATH = 'infrastructure/integrationTestStack.yml'
+const STACK_NAME = 'RiseFoundationTestDB'
+const TEMPLATE_PATH = 'infrastructure/dbStack.json'
 const SECOND = 1000
 jest.setTimeout(SECOND * 60)
 

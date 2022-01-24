@@ -70,5 +70,3 @@ module.exports = {
         }
     ]
 }
-
-459134
