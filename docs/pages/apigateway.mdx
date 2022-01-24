@@ -2,15 +2,20 @@
 
 ## Introduction
 
-Api Gateway is...
+Api Gateway creates api endpoints, and allows you to connect other aws resources such as lambda
+functions or step functions.
 
 ## apigateway.cf.makeLambdaEndpoint
+
+This generates cloudformation for a very specific usecase. It is meant for applications
+that only need 1 endpoint and will attach a single general purpose lambda to that endpoint. This
+endpoint will only respond to POST http methods.
 
 ```ts
 import rise from 'rise-foundation'
 const endpointCloudformation = rise.apigateway.cf.makeLambdaEndpoint({
     endpointName: 'MyEndpoint',
-    lambdaName: 'MainLambbda',
+    lambdaName: 'LambdaName', // This refers to the lambdas CloudFormation ID that is given in the template.
     stage: 'dev',
     path: 'graphql'
 })

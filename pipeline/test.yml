@@ -10,4 +10,5 @@ phases:
             - npm run ci:test:db
             - npm run ci:test:s3
             - npm run ci:test:cognito
+            - npm run ci:test:api
             - npm run ci:test:cloudformation

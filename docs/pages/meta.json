@@ -4,10 +4,10 @@
     "dynamodb": "🌲 Dynamo DB",
     "s3": "🌲 S3",
     "cognito": "🌲 Cognito",
-    "cloudformation": "🌿 CloudFormation",
+    "apigateway": "🌲 Api Gateway",
+    "cloudformation": "🌲 CloudFormation",
     "lambda": "🌿 Lambda",
     "stepfunctions": "🌿 StepFunctions",
     "codestar": "🌿 CodeStar",
-    "cloudwatch": "🌿 CloudWatch",
-    "apigateway": "🌱 Api Gateway"
+    "cloudwatch": "🌿 CloudWatch"
 }
