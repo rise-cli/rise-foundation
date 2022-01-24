@@ -4,7 +4,7 @@ export function makeDb(name: string) {
             Database: {
                 Type: 'AWS::DynamoDB::Table',
                 Properties: {
-                    TableName2: name,
+                    TableName: name,
                     AttributeDefinitions: [
                         {
                             AttributeName: 'pk',

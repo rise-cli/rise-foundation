@@ -3,7 +3,8 @@ import uploadFile from './upload_file'
 import removeFile from './remove_file'
 import * as fs from 'fs'
 import makeBucket from './cf/bucket'
-import aws from 'aws-sdk'
+import makeSimpleBucket from './cf/makeSimpleBucket'
+import aws, { Outposts } from 'aws-sdk'
 
 const cloudformation = new aws.CloudFormation({
     region: 'us-east-1'
@@ -32,6 +33,18 @@ async function getOutputs(props: { stack: string; outputs: string[] }) {
 
 test('cf.makeBucket CloudFormation is valid', async () => {
     const x = makeBucket('mytestbucket')
+    const xs = makeSimpleBucket('mysimpletestbucket')
+    const template = {
+        Resources: {
+            ...x.Resources,
+            ...xs.Resources
+        },
+        Outputs: {
+            ...x.Outputs,
+            ...xs.Outputs
+        }
+    }
+
     const res: any = await cloudformation
         .validateTemplate({
             TemplateBody: JSON.stringify(x)

@@ -9,6 +9,7 @@ process.env.TABLE = 'RiseFoundationIntegrationTestTable'
 
 test('cf.makeDb Cloudformation is valid', async () => {
     const x = makeDb('my-test')
+
     const res: any = await cf
         .validateTemplate({
             TemplateBody: JSON.stringify(x)

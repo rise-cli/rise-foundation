@@ -37,7 +37,8 @@ async function getCognitoIds(props: { stack: string; outputs: string[] }) {
 }
 
 test('cf.makeCognitoPoolAndClient CloudFormation is valid', async () => {
-    const x = makeCognitoPoolAndClient('my-test-cognito')
+    const x = makeCognitoPoolAndClient('mytestcognito')
+    console.log(JSON.stringify(x, null, 2))
     const res: any = await cloudformation
         .validateTemplate({
             TemplateBody: JSON.stringify(x)
