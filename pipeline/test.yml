@@ -13,3 +13,4 @@ phases:
             - npm run ci:test:api
             - npm run ci:test:cloudformation
             - npm run ci:test:stepfunction
+            - npm run ci:test:ssm

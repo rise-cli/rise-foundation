@@ -1,6 +1,6 @@
 {
     "name": "rise-foundation",
-    "version": "0.0.35",
+    "version": "0.0.36",
     "description": "",
     "main": "dist/index.js",
     "types": "dist/index.d.ts",
@@ -13,7 +13,8 @@
         "ci:test:cognito": "node_modules/.bin/jest src/cognito/cognito.test",
         "ci:test:cloudformation": "node_modules/.bin/jest src/cloudformation/cloudformation.test",
         "ci:test:api": "node_modules/.bin/jest src/apiGateway/apiGateway.test",
-        "ci:test:stepfunction": "node_modules/.bin/jest src/stepfunctions/stepfunction.test"
+        "ci:test:stepfunction": "node_modules/.bin/jest src/stepfunctions/stepfunction.test",
+        "ci:test:ssm": "node_modules/.bin/jest src/ssm/ssm.test"
     },
     "keywords": [],
     "author": "",

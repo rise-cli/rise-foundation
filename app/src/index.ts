@@ -47,6 +47,11 @@ import { makeLambdaErrorAlarm } from './cloudwatch/cf/makeLambdaErrorAlarm'
 import { makeStepFunction } from './stepfunctions/cf/makeStepFunction'
 import { updateStepFunctionDefinition } from './stepfunctions/updateStepFunctionDefinition'
 
+// SSM
+import { getParameter } from './ssm/getParameter'
+import { setParameter } from './ssm/setParameter'
+import { removeParameter } from './ssm/removeParameter'
+
 export default {
     s3: {
         cf: {
@@ -113,5 +118,10 @@ export default {
             makeStepFunction
         },
         updateStepFunctionDefinition
+    },
+    ssm: {
+        getParameter,
+        setParameter,
+        removeParameter
     }
 }

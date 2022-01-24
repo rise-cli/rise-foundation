@@ -1,0 +1,33 @@
+# ssm
+
+## Introduction
+
+SSM is great for storing parameters to use to configure deployments and resources.
+
+## ssm.setParameter
+
+```ts
+import rise from 'rise-foundation'
+await rise.ssm.setParameter({
+    key: 'MyParamter',
+    value: '1234'
+})
+```
+
+## ssm.getParameter
+
+```ts
+import rise from 'rise-foundation'
+const myValue = await rise.ssm.getParameter({
+    key: 'MyParamter'
+})
+```
+
+## ssm.removeParameter
+
+```ts
+import rise from 'rise-foundation'
+await rise.ssm.removeParameter({
+    key: 'MyParamter'
+})
+```
