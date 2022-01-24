@@ -11,10 +11,7 @@ export type UpdateStepFunctionDefinitionInput = {
 
 //https://docs.aws.amazon.com/AWSJavaScriptSDK/latest/AWS/StepFunctions.html#updateStateMachine-property
 
-export async function updateStepFunctionDefinition({
-    arn,
-    definition
-}: UpdateStepFunctionDefinitionInput) {
+export async function updateStepFunctionDefinition({ arn, definition }: UpdateStepFunctionDefinitionInput) {
     const params = {
         stateMachineArn: arn /* required */,
         definition: definition
