@@ -61,3 +61,13 @@ const removeResult = await rise.cloudformation.getRemoveStatus({
     }
 })
 ```
+
+## cloudformation.getCloudFormationOutputs
+
+```ts
+import rise from 'rise-foundation'
+const outputResult = await rise.cloudformation.getCloudFormationOutputs({
+    stack: 'nameOfStack',
+    outputs: ['Output1', 'Output2']
+})
+```

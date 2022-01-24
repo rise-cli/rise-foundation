@@ -1,8 +1,10 @@
 import { deployStack } from './deployStack'
 import { getDeployStatus } from './getDeployStatus'
+import { getCloudFormationOutputs } from './getOutputs'
 import fs from 'fs'
 
 const STACK_NAME = 'RiseFoundationTestDB'
+const STACK_WITH_OUTPUT_NAME = 'RiseFoundationTestApi'
 const TEMPLATE_PATH = 'infrastructure/dbStack.json'
 const SECOND = 1000
 jest.setTimeout(SECOND * 60)
@@ -37,4 +39,13 @@ test('deployStack and getDployStatus work', async () => {
 
     expect(res2.status).toBe('success')
     expect(checking).toBe('onCheckIsNotCalled')
+})
+
+test('getCloudFormationOutputs will work', async () => {
+    const x = await getCloudFormationOutputs({
+        stack: STACK_WITH_OUTPUT_NAME,
+        outputs: ['Endpoint']
+    })
+
+    expect(x.Endpoint).toBeTruthy()
 })
