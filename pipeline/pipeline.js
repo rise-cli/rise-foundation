@@ -18,6 +18,13 @@ module.exports = {
             actions: [
                 {
                     type: 'DEPLOY',
+                    name: 'DeployBase',
+                    inputArtifact: 'sourceZip',
+                    stackName: 'RiseFoundationTestBase',
+                    template: 'app/infrastructure/baseStack.json'
+                },
+                {
+                    type: 'DEPLOY',
                     name: 'DeployDB',
                     inputArtifact: 'sourceZip',
                     stackName: 'RiseFoundationTestDB',

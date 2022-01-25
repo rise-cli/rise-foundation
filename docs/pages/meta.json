@@ -7,6 +7,7 @@
     "apigateway": "🌲 Api Gateway",
     "cloudformation": "🌲 CloudFormation",
     "stepfunctions": "🌲 StepFunctions",
+    "ssm": "🌲 SSM",
     "lambda": "🌿 Lambda",
     "codestar": "🌿 CodeStar",
     "cloudwatch": "🌿 CloudWatch"

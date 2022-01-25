@@ -14,7 +14,8 @@
         "ci:test:cloudformation": "node_modules/.bin/jest src/cloudformation/cloudformation.test",
         "ci:test:api": "node_modules/.bin/jest src/apiGateway/apiGateway.test",
         "ci:test:stepfunction": "node_modules/.bin/jest src/stepfunctions/stepfunction.test",
-        "ci:test:ssm": "node_modules/.bin/jest src/ssm/ssm.test"
+        "ci:test:ssm": "node_modules/.bin/jest src/ssm/ssm.test",
+        "ci:test:lambda": "node_modules/.bin/jest src/lambda/lambda.test"
     },
     "keywords": [],
     "author": "",
