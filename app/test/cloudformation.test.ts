@@ -1,6 +1,6 @@
-import { deployStack } from './deployStack'
-import { getDeployStatus } from './getDeployStatus'
-import { getCloudFormationOutputs } from './getOutputs'
+import { deployStack } from '../src/cloudformation/deployStack'
+import { getDeployStatus } from '../src/cloudformation/getDeployStatus'
+import { getCloudFormationOutputs } from '../src/cloudformation/getOutputs'
 import fs from 'fs'
 
 const STACK_NAME = 'RiseFoundationTestDB'

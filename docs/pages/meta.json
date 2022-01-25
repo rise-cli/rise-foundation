@@ -6,9 +6,9 @@
     "cognito": "🌲 Cognito",
     "apigateway": "🌲 Api Gateway",
     "cloudformation": "🌲 CloudFormation",
+    "lambda": "🌲 Lambda",
     "stepfunctions": "🌲 StepFunctions",
     "ssm": "🌲 SSM",
-    "lambda": "🌿 Lambda",
     "codestar": "🌿 CodeStar",
     "cloudwatch": "🌿 CloudWatch"
 }

@@ -1,6 +1,6 @@
-import { getDbItem, listDbItems, setDbItem, removeDbItem } from './db'
-import { makeDb } from './cf/makeDb'
-import { deployStack } from '../cloudformation/deployStack'
+import { getDbItem, listDbItems, setDbItem, removeDbItem } from '../src/db/db'
+import { makeDb } from '../src/db/cf/makeDb'
+import { deployStack } from '../src/cloudformation/deployStack'
 
 const STACK_NAME = 'RiseFoundationTestDB'
 const SECOND = 1000

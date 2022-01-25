@@ -1,6 +1,6 @@
-import { deployStack } from '../cloudformation/deployStack'
-import { makeLambdaEndpoint } from './cf/makeLambdaEndpoint'
-import { makeInlineLambda } from '../lambda/cf/makeInlineLambda'
+import { deployStack } from '../src/cloudformation/deployStack'
+import { makeLambdaEndpoint } from '../src/apiGateway/cf/makeLambdaEndpoint'
+import { makeInlineLambda } from '../src/lambda/cf/makeInlineLambda'
 import axios from 'axios'
 import aws from 'aws-sdk'
 

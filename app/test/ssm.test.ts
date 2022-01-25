@@ -1,6 +1,6 @@
-import { getParameter } from './getParameter'
-import { setParameter } from './setParameter'
-import { removeParameter } from './removeParameter'
+import { getParameter } from '../src/ssm/getParameter'
+import { setParameter } from '../src/ssm/setParameter'
+import { removeParameter } from '../src/ssm/removeParameter'
 
 test('ssm works', async () => {
     const setResult = await setParameter({

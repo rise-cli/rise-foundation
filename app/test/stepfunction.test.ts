@@ -1,6 +1,6 @@
-import { makeStepFunction } from './cf/makeStepFunction'
-import { updateStepFunctionDefinition } from './updateStepFunctionDefinition'
-import { deployStack } from '../cloudformation/deployStack'
+import { makeStepFunction } from '../src/stepfunctions/cf/makeStepFunction'
+import { updateStepFunctionDefinition } from '../src/stepfunctions/updateStepFunctionDefinition'
+import { deployStack } from '../src/cloudformation/deployStack'
 import aws from 'aws-sdk'
 
 const STACK_NAME = 'RiseFoundationTestStepFunction'
