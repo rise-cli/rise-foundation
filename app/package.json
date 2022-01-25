@@ -15,7 +15,7 @@
         "ci:test:api": "node_modules/.bin/jest src/apiGateway/apiGateway.test",
         "ci:test:stepfunction": "node_modules/.bin/jest src/stepfunctions/stepfunction.test",
         "ci:test:ssm": "node_modules/.bin/jest src/ssm/ssm.test",
-        "ci:test:lambda": "node_modules/.bin/jest src/lambda/lambda.test"
+        "ci:test:lambda": "node_modules/.bin/jest test/lambda.test"
     },
     "keywords": [],
     "author": "",
@@ -26,6 +26,7 @@
         "@types/node": "^16.7.10",
         "aws-sdk": "^2.987.0",
         "axios": "^0.25.0",
+        "fs-extra": "^10.0.0",
         "jest": "^27.0.6",
         "ts-jest": "^27.0.4",
         "typescript": "^4.4.3"

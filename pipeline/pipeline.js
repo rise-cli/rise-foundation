@@ -53,6 +53,13 @@ module.exports = {
                 },
                 {
                     type: 'DEPLOY',
+                    name: 'DeployLambda',
+                    inputArtifact: 'sourceZip',
+                    stackName: 'RiseFoundationTestLambda',
+                    template: 'app/infrastructure/lambdaStack.json'
+                },
+                {
+                    type: 'DEPLOY',
                     name: 'DeployStepFunction',
                     inputArtifact: 'sourceZip',
                     stackName: 'RiseFoundationTestStepFunction',
