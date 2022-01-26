@@ -15,3 +15,4 @@ phases:
             - npm run ci:test:stepfunction
             - npm run ci:test:lambda
             - npm run ci:test:ssm
+            - npm run ci:test:keywords

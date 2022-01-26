@@ -52,6 +52,9 @@ import { getParameter } from './ssm/getParameter'
 import { setParameter } from './ssm/setParameter'
 import { removeParameter } from './ssm/removeParameter'
 
+// Keywords
+import { getKeyword } from './keywords'
+
 export default {
     s3: {
         cf: {
@@ -123,5 +126,8 @@ export default {
         getParameter,
         setParameter,
         removeParameter
+    },
+    keywords: {
+        getKeyword
     }
 }

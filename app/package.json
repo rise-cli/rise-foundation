@@ -1,6 +1,6 @@
 {
     "name": "rise-foundation",
-    "version": "0.0.37",
+    "version": "0.0.38",
     "description": "",
     "main": "dist/index.js",
     "types": "dist/index.d.ts",
@@ -15,7 +15,8 @@
         "ci:test:api": "node_modules/.bin/jest test/apiGateway.test",
         "ci:test:stepfunction": "node_modules/.bin/jest test/stepfunction.test",
         "ci:test:ssm": "node_modules/.bin/jest test/ssm.test",
-        "ci:test:lambda": "node_modules/.bin/jest test/lambda.test"
+        "ci:test:lambda": "node_modules/.bin/jest test/lambda.test",
+        "ci:test:keywords": "node_modules/.bin/jest test/keywords.test"
     },
     "keywords": [],
     "author": "",

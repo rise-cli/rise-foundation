@@ -1,0 +1,44 @@
+# Keywords
+
+## Introduction
+
+Keywords is a string util which takes a string and replaces the keywords in that string
+with values retrieved using the aws sdk.
+
+## keywords.getKeyword
+
+The following keywords are available:
+
+-   @output.stackname.outputname
+-   @ssm.paramname
+-   @accountId
+-   @stage
+-   @region
+
+Region and stage need to either be provided by you or they will default to `us-east-1` and `dev`.
+Other values will be fetched from your aws account.
+
+```ts
+import rise from 'rise-foundation'
+// example of state object to provide as the first parameter
+const state = {
+    '@region': 'us-east-2'
+}
+
+const keyword = 'example-{@ssm.username}-{@output.BaseStack.DB}-{@stage}'
+const result = rise.keywords.getKeyword(state, keyword)
+```
+
+This will return an object like the following:
+
+```ts
+{
+    result: 'example-John-NotesDb-dev',
+    state: {
+        '@stage': 'dev',
+        '@region': 'us-east-2',
+        '@ssm.username': 'John',
+        '@output.BaseStack.DB': 'NotesDb'
+    }
+}
+```
