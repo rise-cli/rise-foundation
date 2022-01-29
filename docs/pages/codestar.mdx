@@ -71,12 +71,27 @@ Pipelines can take the following actions:
 
 #### Source Action
 
+Github:
+
 ```ts
 const action = {
     type: 'SOURCE',
     name: 'nameOfAction',
     owner: 'githubAccount',
     repo: 'githubRepo',
+    // optional
+    outputArtifact: 'nameOfZip'
+}
+```
+
+CodeCommit:
+
+```ts
+const action = {
+    type: 'SOURCE',
+    name: 'nameOfAction',
+    repo: 'codeCommitRepo',
+    platform: 'code-commit',
     // optional
     outputArtifact: 'nameOfZip'
 }
