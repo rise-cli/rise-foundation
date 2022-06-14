@@ -20,3 +20,19 @@ const endpointCloudformation = rise.apigateway.cf.makeLambdaEndpoint({
     path: 'graphql'
 })
 ```
+
+## apigateway.cf.makeLambdaGetEndpoint
+
+This generates cloudformation for a very specific usecase. It is meant for applications
+that only need 1 endpoint and will attach a single general purpose lambda to that endpoint. This
+endpoint will only respond to GET http methods.
+
+```ts
+import rise from 'rise-foundation'
+const endpointCloudformation = rise.apigateway.cf.makeLambdaGetEndpoint({
+    endpointName: 'MyEndpoint',
+    lambdaName: 'LambdaName', // This refers to the lambdas CloudFormation ID that is given in the template.
+    stage: 'dev',
+    path: 'graphql'
+})
+```

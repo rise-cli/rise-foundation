@@ -55,6 +55,10 @@ import { removeParameter } from './ssm/removeParameter'
 // Keywords
 import { getKeyword } from './keywords'
 
+// ApiGateway
+import { makeLambdaGetEndpoint } from './apiGateway/cf/makeLambdaGetEndpoint'
+import { makeLambdaEndpoint} from './apiGateway/cf/makeLambdaEndpoint'
+
 export default {
     s3: {
         cf: {
@@ -129,5 +133,9 @@ export default {
     },
     keywords: {
         getKeyword
+    },
+    apigateway: {
+        makeLambdaGetEndpoint,
+        makeLambdaEndpoint
     }
 }
